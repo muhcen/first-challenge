@@ -17,11 +17,9 @@ exports.createList = async (req, res) => {
 
 exports.findList = async (req, res) => {
     const { sort, ...query } = req.query;
-    console.log(query);
     let queryStr = JSON.stringify(query);
     queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
     queryStr = JSON.parse(queryStr);
-    console.log(queryStr);
     const lists = await List.find({ user: req.user._id, ...queryStr }).sort(
         sort.split(',').join(' '),
     );
